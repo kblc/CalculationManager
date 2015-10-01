@@ -1,0 +1,213 @@
+﻿<Window x:Class="CalculationManagerApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:a="clr-namespace:CalculationManagerApplication.Additional"
+        xmlns:a2="clr-namespace:CalculationManagerApplication.CMWebServiceReference"
+        xmlns:conv="clr-namespace:CalculationManagerApplication.Converters"
+        xmlns:sorted="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        Title="Диспетчер расчётов" Height="350" Width="525"
+        Style="{DynamicResource WindowStyle}" Icon="calculator-128.ico">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo Description="Диспетчер расчётов"/>
+    </Window.TaskbarItemInfo>
+    <Window.Resources>
+        <a:CMWebServiceData x:Key="serviceData"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <conv:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+        <conv:DatesBetweenConverter x:Key="DatesBetweenConverter"/>
+        <conv:UtcDateToLocalDateConverter x:Key="UtcDateToLocalDateConverter"/>
+        <conv:ApplyMathConverter x:Key="ApplyMathConverter"/>
+        <CollectionViewSource Source="{Binding FileCalculation}" x:Key="fileCalculation">
+            <CollectionViewSource.SortDescriptions>
+                <sorted:SortDescription PropertyName="DateStart" Direction="Descending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <SolidColorBrush Color="#FF702E2E" x:Key="ErrorBrush"/>
+        <SolidColorBrush Color="#FF2259AA" x:Key="ActionBrush"/>
+        <BitmapImage UriSource="/CalculationManagerApplication;component/Images/error2.png" x:Key="BitmapError"/>
+        <DrawingImage x:Key="overlayImage">
+            <DrawingImage.Drawing>
+                <ImageDrawing ImageSource="{StaticResource BitmapError}" Rect="0,0,16,16"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Source="{StaticResource serviceData}" Path="."/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Background="{DynamicResource WindowCaptionErrorBrush}" Grid.Row="0" Margin="-5,0"
+                Padding="5"
+                Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="{Binding ErrorText, StringFormat=Ошибка: {0}}" TextWrapping="WrapWithOverflow"/>
+        </Border>
+        <Grid Grid.Row="1" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}"
+              Margin="-5,0">
+            <Border Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <DockPanel>
+                    <TextBlock Text="Сейчас расчёты выполняются" Padding="5" VerticalAlignment="Center"/>
+                    <Button Content="Остановить" VerticalAlignment="Center"
+                        Margin="5,3" 
+                        HorizontalAlignment="Right"
+                        Command="{Binding DeactivateCommand}"/>
+                </DockPanel>
+            </Border>
+            <Border Background="{DynamicResource WindowCaptionErrorBrush}"
+                Visibility="{Binding IsActive, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                <DockPanel>
+                    <TextBlock Text="Сейчас расчёты остановлены" Padding="5" VerticalAlignment="Center"/>
+                    <Button Content="Запустить" VerticalAlignment="Center"
+                        Margin="5,3" 
+                        HorizontalAlignment="Right"
+                        Command="{Binding ActivateCommand}"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <ListBox Grid.Row="2" ItemsSource="{Binding Source={StaticResource fileCalculation}}"
+                 x:Name="listBox"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 ScrollViewer.CanContentScroll="False"
+                 SelectedItem="{x:Null}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type a2:FileCalculationInfo}">
+                    <Border x:Name="PART_border" 
+                                Margin="2"
+                                Padding="4,4" 
+                                BorderBrush="Black" 
+                                BorderThickness="0"
+                                HorizontalAlignment="Left"
+                                Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth, Converter={StaticResource ApplyMathConverter}, ConverterParameter=-45}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" MaxHeight="500"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DateStart, StringFormat=Дата начала: {0:dd.MM.yyyy HH:mm:ss}, Converter={StaticResource UtcDateToLocalDateConverter}}" x:Name="PART_dateStart" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DateEnd, StringFormat=Дата окончания: {0:dd.MM.yyyy HH:mm:ss}, Converter={StaticResource UtcDateToLocalDateConverter}}" x:Name="PART_dateEnd" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"/>
+
+                            <Border Grid.RowSpan="2" Margin="0,0,5,5" VerticalAlignment="Center" x:Name="PART_icon" Visibility="Collapsed">
+                                <Image Source="{StaticResource BitmapError}" Width="24" Height="24"/>
+                            </Border>
+                            
+                            <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" x:Name="PART_status" Margin="4,0" VerticalAlignment="Top" TextWrapping="WrapWithOverflow"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding File}" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                            <Button Grid.Row="2" Grid.Column="2"  VerticalAlignment="Center"
+                                    Command="{Binding LoadLogContentCommand}" 
+                                    CommandParameter="{Binding Id}" Content="Получить лог..." x:Name="PART_loadLogContent" Visibility="Collapsed"/>
+                            <ToggleButton Grid.Row="2" Grid.Column="2" Content="Просмотр лога" x:Name="PART_showLogContent" Visibility="Collapsed"/>
+                            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.ColumnSpan="99" Margin="0,4" Visibility="{Binding ElementName=PART_showLogContent, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox MaxLines="10" 
+                                         Text="{Binding LogContent}"
+                                         IsReadOnly="True"
+                                         ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                                <TextBlock HorizontalAlignment="Right">
+                                    <Hyperlink Command="{Binding CopyLogToClipboardCommand}">
+                                        <TextBlock TextDecorations="Underline" Text="Скопировать текст"/>
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Grid.Row="4" Grid.ColumnSpan="99" Visibility="Collapsed" x:Name="PART_error">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBox Text="{Binding Error}" 
+                                             TextWrapping="WrapWithOverflow"
+                                             IsReadOnly="True"
+                                             MaxLines="20"
+                                             ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                             Background="{Binding ElementName=PART_error, Path=Background}"/>
+
+                                    <TextBlock HorizontalAlignment="Right">
+                                        <Hyperlink Command="{Binding CopyErrorTextToClipboardCommand}">
+                                            <TextBlock  TextDecorations="Underline" Text="Скопировать текст ошибки"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="InAction">
+                            <!--<Setter TargetName="PART_border" Property="Background" Value="{StaticResource ActionBrush}"/>-->
+                            <Setter TargetName="PART_status" Property="Text" Value="Обрабатывается..."/>
+                            <Setter TargetName="PART_dateEnd" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="Done">
+                            <!--<Setter TargetName="PART_border" Property="Background" Value="{StaticResource GoodBrush}"/>-->
+                            <Setter TargetName="PART_status" Property="Text">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource DatesBetweenConverter}" StringFormat="Завершено за ({0:hh\:mm\:ss})">
+                                        <Binding Path="DateStart"/>
+                                        <Binding Path="DateEnd"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_loadLogContent" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="Error">
+                            <!--<Setter TargetName="PART_border" Property="Background" Value="{StaticResource ErrorBrush}"/>-->
+                            <Setter TargetName="PART_status" Property="Text" Value="Ошибка"/>
+                            <Setter TargetName="PART_dateEnd" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_error" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="PART_icon" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding HasLogContent}" Value="True">
+                            <Setter TargetName="PART_loadLogContent" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_showLogContent" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border Grid.Row="3">
+            <DockPanel>
+                <TextBlock Padding="5" VerticalAlignment="Center" 
+                           Text="{Binding FileQueue.Count, StringFormat=В очереди сейчас: {0}}"
+                           ToolTipService.IsEnabled="{Binding Binding FileQueue.Count}">
+                </TextBlock>
+                <DockPanel.ToolTip>
+                    <ItemsControl ItemsSource="{Binding FileQueue}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type a2:FileQueueElement}">
+                                <DockPanel>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <Binding Path="Changed" StringFormat="[dd.MM.yyyy HH:mm:ss.ff]"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Path=File}" Margin="4,0,0,0"/>
+                                    <!--<TextBlock Text="{Binding Path=Command, StringFormat=CMD:{0}}" Margin="4,0,0,0"/>-->
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DockPanel.ToolTip>
+            </DockPanel>
+        </Border>
+
+        
+        <!--<Popup IsOpen="{Binding ElementName=PART_showLogContent, Path=IsChecked}"
+                                   PlacementTarget="{Binding ElementName=PART_showLogContent}"
+                                   StaysOpen="True">
+                                <Border Background="White" BorderBrush="Black" Padding="4" BorderThickness="1">
+                                    <TextBlock Text="{Binding LogContent}"/>
+                                </Border>
+                            </Popup>-->
+    </Grid>
+</Window>

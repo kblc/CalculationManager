@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CalculationManager.Additional" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CalculationManager.Additional" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:complexType name="ArrayOfFileQueueElement">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileQueueElement" nillable="true" type="tns:FileQueueElement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFileQueueElement" nillable="true" type="tns:ArrayOfFileQueueElement" />
+  <xs:complexType name="FileQueueElement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Changed" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Command" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="File" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileQueueElement" nillable="true" type="tns:FileQueueElement" />
+  <xs:complexType name="ArrayOfFileCalculationInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileCalculationInfo" nillable="true" type="tns:FileCalculationInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFileCalculationInfo" nillable="true" type="tns:ArrayOfFileCalculationInfo" />
+  <xs:complexType name="FileCalculationInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateEnd" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="File" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="tns:FileCalculationStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileCalculationInfo" nillable="true" type="tns:FileCalculationInfo" />
+  <xs:simpleType name="FileCalculationStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="InAction" />
+      <xs:enumeration value="Done" />
+      <xs:enumeration value="Error" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FileCalculationStatus" nillable="true" type="tns:FileCalculationStatus" />
+  <xs:complexType name="IsActivePropertyChangedEventArgs">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System" base="q1:EventArgs">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="IsActivePropertyChangedEventArgs" nillable="true" type="tns:IsActivePropertyChangedEventArgs" />
+  <xs:complexType name="FileQueueChangedArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" type="tns:FileQueueAction" />
+      <xs:element minOccurs="0" name="Element" nillable="true" type="tns:FileQueueElement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileQueueChangedArgs" nillable="true" type="tns:FileQueueChangedArgs" />
+  <xs:simpleType name="FileQueueAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Push" />
+      <xs:enumeration value="Pop" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FileQueueAction" nillable="true" type="tns:FileQueueAction" />
+</xs:schema>

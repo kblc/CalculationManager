@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cbd5176b-d1fe-4135-adad-bb5bddda320d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://localhost:9929/CalculationManager/ControlService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="f658cd90-380e-451e-a054-d89be67f0b7d" SourceId="1" SourceUrl="net.tcp://localhost:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="e3c8a356-1cbd-44ac-a730-0deb93780039" SourceId="1" SourceUrl="net.tcp://localhost:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="d239cb46-0a96-49c0-a53c-7399104b38d1" SourceId="1" SourceUrl="net.tcp://localhost:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="CalculationManager.Additional1.xsd" MetadataType="Schema" ID="2b52a241-4497-411f-90d2-f80838461666" SourceId="1" SourceUrl="net.tcp://localhost:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="System1.xsd" MetadataType="Schema" ID="50d11a51-9f80-44c4-baaf-b209b41c8e9e" SourceId="1" SourceUrl="net.tcp://localhost:9929/CalculationManager/ControlService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

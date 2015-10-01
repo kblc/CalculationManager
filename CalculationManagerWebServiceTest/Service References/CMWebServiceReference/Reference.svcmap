@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f7a84def-5553-4a50-893c-f12f0cf04a93" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="3f3a637c-4c79-4e36-9b83-0a401bc19eaa" SourceId="1" SourceUrl="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="7fac6e1c-39a9-4ec9-aae1-3939e8a0da07" SourceId="1" SourceUrl="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="fb2cf257-d7df-4ff1-a812-97837c72025a" SourceId="1" SourceUrl="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="CalculationManager.Additional.xsd" MetadataType="Schema" ID="6ab59a99-a49d-431d-b319-693672080771" SourceId="1" SourceUrl="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="4b1ba01e-72e6-4d31-b304-59cfca702a12" SourceId="1" SourceUrl="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

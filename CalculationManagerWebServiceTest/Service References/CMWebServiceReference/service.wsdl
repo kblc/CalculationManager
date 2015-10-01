@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ControlService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IControlService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/CalculationManager.Additional" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IControlService_GetIsCalculationActive_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIsCalculationActive" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_GetIsCalculationActive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIsCalculationActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_SetIsCalculationActive_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetIsCalculationActive" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_SetIsCalculationActive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetIsCalculationActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_GetQueue_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetQueue" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_GetQueue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetQueueResponse" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_GetLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLog" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_GetLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_SubscribeEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeEvents" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_SubscribeEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_UnsubscribeEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeEvents" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_UnsubscribeEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_IsCalculationActiveChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:IsCalculationActiveChanged" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_QueueChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:QueueChanged" />
+  </wsdl:message>
+  <wsdl:message name="IControlService_LogChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:LogChanged" />
+  </wsdl:message>
+  <wsdl:portType name="IControlService">
+    <wsdl:operation name="GetIsCalculationActive">
+      <wsdl:input wsaw:Action="http://tempuri.org/IControlService/GetIsCalculationActive" message="tns:IControlService_GetIsCalculationActive_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/GetIsCalculationActiveResponse" message="tns:IControlService_GetIsCalculationActive_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetIsCalculationActive">
+      <wsdl:input wsaw:Action="http://tempuri.org/IControlService/SetIsCalculationActive" message="tns:IControlService_SetIsCalculationActive_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/SetIsCalculationActiveResponse" message="tns:IControlService_SetIsCalculationActive_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetQueue">
+      <wsdl:input wsaw:Action="http://tempuri.org/IControlService/GetQueue" message="tns:IControlService_GetQueue_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/GetQueueResponse" message="tns:IControlService_GetQueue_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLog">
+      <wsdl:input wsaw:Action="http://tempuri.org/IControlService/GetLog" message="tns:IControlService_GetLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/GetLogResponse" message="tns:IControlService_GetLog_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubscribeEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IControlService/SubscribeEvents" message="tns:IControlService_SubscribeEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/SubscribeEventsResponse" message="tns:IControlService_SubscribeEvents_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IControlService/UnsubscribeEvents" message="tns:IControlService_UnsubscribeEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/UnsubscribeEventsResponse" message="tns:IControlService_UnsubscribeEvents_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsCalculationActiveChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/IsCalculationActiveChanged" message="tns:IControlService_IsCalculationActiveChanged_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueueChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/QueueChanged" message="tns:IControlService_QueueChanged_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IControlService/LogChanged" message="tns:IControlService_LogChanged_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IControlService" type="tns:IControlService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IControlService_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetIsCalculationActive">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/GetIsCalculationActive" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetIsCalculationActive">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/SetIsCalculationActive" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQueue">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/GetQueue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLog">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/GetLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubscribeEvents">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/SubscribeEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeEvents">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/UnsubscribeEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsCalculationActiveChanged">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/IsCalculationActiveChanged" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueueChanged">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/QueueChanged" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogChanged">
+      <soap12:operation soapAction="http://tempuri.org/IControlService/LogChanged" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ControlService">
+    <wsdl:port name="NetTcpBinding_IControlService" binding="tns:NetTcpBinding_IControlService">
+      <soap12:address location="net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://ws27sychss.office.gtt.gazprom.ru:9929/CalculationManager/ControlService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>SychSS_adm@OFFICE.GTT.GAZPROM.RU</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
