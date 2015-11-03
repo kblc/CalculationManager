@@ -51,6 +51,8 @@ namespace CalculationManagerFileWriter
                 var ci = new CultureInfo("ru-RU");
                 var creationDate = GetPZGFileDate(inputFile, "dd.MM.yyyy", ci);
 
+                //creationDate = new DateTime(2015, 11, 01);
+
                 string fDate = string.Empty;
                 string lDate = string.Empty;
 
@@ -66,11 +68,30 @@ namespace CalculationManagerFileWriter
                     fDate = creationDate.ToString("dd.MM.yyyy");
 
                     var lDayMonth = creationDate.ToString("MMMM", ci).Substring(0, 1).ToUpper() + creationDate.ToString("MMMM", ci).Substring(1);
-                    while (lDayMonth.Length < 7)
-                        lDayMonth = " " + lDayMonth;
-                    if (lDayMonth.Length < 8)
+
+                    //switch (creationDate.Month)
+                    //{
+                    //    //Специальные настройки для ноября. Должен быть такой формат: '_1_Ноябрь__2015г'
+                    //    case 11:
+
+                    //        while (lDayMonth.Length < 8)
+                    //            lDayMonth += " ";
+
+                    //        break;
+                    //    //Обычные настройки для всех остальных. Должен быть такой формат: '_1____Март_2015г'
+                    //    default:
+
+                    //        while (lDayMonth.Length < 7)
+                    //            lDayMonth = " " + lDayMonth;
+                    //        if (lDayMonth.Length < 8)
+                    //            lDayMonth += " ";
+
+                    //        break;
+                    //}
+
+                    while (lDayMonth.Length < 8)
                         lDayMonth += " ";
-                    
+
                     lDate = creationDate.ToString("dd "+ lDayMonth + "yyyy", ci);
 
                     if (fDate[0] == '0')
