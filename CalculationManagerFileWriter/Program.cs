@@ -72,12 +72,12 @@ namespace CalculationManagerFileWriter
                     switch (creationDate.Month)
                     {
                         //Специальные настройки для ноября. Должен быть такой формат: '_1_Ноябрь__2015г'
+                        case 1:
                         case 11:
-
                             while (lDayMonth.Length < 8)
                                 lDayMonth += " ";
-
                             break;
+
                         //Обычные настройки для всех остальных. Должен быть такой формат: '_1____Март_2015г'
                         default:
 
@@ -85,7 +85,6 @@ namespace CalculationManagerFileWriter
                                 lDayMonth = " " + lDayMonth;
                             if (lDayMonth.Length < 8)
                                 lDayMonth += " ";
-
                             break;
                     }
 
